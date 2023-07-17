@@ -27,4 +27,5 @@ if __name__ == '__main__':
             'ljcheck-config.0.yml;.'
         ]
     ])
+    zip_install(os.path.join('.', 'dist', 'ljreg'))
 ```
