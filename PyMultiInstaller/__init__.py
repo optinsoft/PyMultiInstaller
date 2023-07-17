@@ -7,6 +7,7 @@ import os
 import platform
 import re
 from pathlib import Path
+import zipfile
 
 logger = logging.getLogger(__name__)
 
@@ -118,3 +119,13 @@ def make_all_installer(pyi_args_list: list, all_spec_name: str = 'all', all_spec
     except RecursionError:
         from PyInstaller import _recursion_too_deep_message
         _recursion_too_deep_message.raise_with_msg()
+
+def zip_install(install_dir: str) -> str:
+    zip_file_path = install_dir + '.zip'
+    with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        for root, dirs, files in os.walk(install_dir):
+            for file in files:
+                path = os.path.join(root, file)
+                zip_file.write(path, arcname=path.replace(install_dir, '.'))
+    logger.info(f'ZIP file created: {zip_file_path}')
+    return zip_file_path
