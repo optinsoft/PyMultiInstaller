@@ -8,6 +8,8 @@ import platform
 import re
 from pathlib import Path
 
+logger = logging.getLogger(__name__)
+
 def make_all_spec_file(spec_files: list, all_spec_name: str = 'all', all_spec_path: str = '') -> str:
     s_all = ""
     coll_all = []
